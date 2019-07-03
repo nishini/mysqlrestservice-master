@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 /**
- * Created  by S.M.D.V.DHANANJAYA
+ * Created  by NISANSALA
  */
 @Controller
-@RequestMapping(path="/pizzaApp")
+@RequestMapping(path="/demo")
 public class MainController {
     private static final String SUCCESS= "Saved";
 
@@ -20,17 +20,14 @@ public class MainController {
     private PizzaRepository pizzaRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private CartRepository cartRepository;
 
     /*
     * READ Operation
     * This method will list all the pizzas in the table
-    * URI to access this: http://localhost:8080/pizzaApp/pizzaAll
+    * URI to access this: http://localhost:8080/demo/all
     */
-    @GetMapping(path="/pizzaAll")
+    @GetMapping(path="/all")
     public @ResponseBody Iterable<PizzaDetails> getPizzaDetails() {
         return pizzaRepository.findAll();
     }
@@ -38,9 +35,9 @@ public class MainController {
     /*
      * READ Operation
      * This method will list all the cart item in the table
-     * URI to access this: http://localhost:8080/pizzaApp/cartAll
+     * URI to access this: http://localhost:8080/demo/cart
      */
-    @GetMapping(path="/cartAll")
+    @GetMapping(path="/cart")
     public @ResponseBody Iterable<CartDetails> getCartDetails() {
         return cartRepository.findAll();
     }
@@ -48,7 +45,7 @@ public class MainController {
     /*
     * READ Operation based on Pizza ID
     * This method will return the details of a pizza specified by the ID
-    * URI to access this: http://localhost:8080/pizzaApp/findByPizzaId?id=2
+    * URI to access this: http://localhost:8080/demo/findByPizzaId?id=2
     */
     @GetMapping(path="/findByPizzaId")
     public @ResponseBody List<PizzaDetails> getPizzaById(@RequestParam Integer id) {
@@ -56,30 +53,10 @@ public class MainController {
     }
 
     /*
-     * READ Operation based on User Email
-     * This method will return User Details if user available
-     * URI to access this: http://localhost:8080/pizzaApp/findByEmail?email=dvishwa2@gmail.com
-     */
-    @GetMapping(path="/findByEmail")
-    public @ResponseBody List<UserDetails> getUserByEmail(@RequestParam String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    /*
-     * READ Operation based on User Password
-     * This method will return User Details if user available
-     * URI to access this: http://localhost:8080/pizzaApp/findByPassword?password=1234
-     */
-    @GetMapping(path="/findByPassword")
-    public @ResponseBody List<UserDetails> getUserByPassword(@RequestParam String password) {
-        return userRepository.findByPassword(password);
-    }
-
-    /*
     * CREATE Operation
     * This method will crate new pizza item in the database table
     * and returns the SUCCESS message
-    * URI to access this: http://localhost:8080/pizzaApp/addPizza?name=VegiPizza&description=VegiSupreme&price=2500&imageUrl=image
+    * URI to access this: http://localhost:8080/demo/addPizza?name=VegiPizza&description=VegiSupreme&price=2500&imageUrl=image
     */
     @GetMapping(path="/addPizza")
     public @ResponseBody String addNewPizza(@RequestParam String name, @RequestParam String description, @RequestParam Double price, @RequestParam String imageUrl) {
@@ -94,26 +71,9 @@ public class MainController {
 
     /*
      * CREATE Operation
-     * This method will crate new user in the database table
-     * and returns the SUCCESS message
-     * URI to access this: http://localhost:8080/pizzaApp/addUser?name=Vishwa&email=dvishwa2@gmail.com&phone=0772760429&password=1234
-     */
-    @GetMapping(path="/addUser")
-    public @ResponseBody String addNewUser(@RequestParam String name, @RequestParam String email, @RequestParam long phone, @RequestParam String password) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setName(name);
-        userDetails.setEmail(email);
-        userDetails.setPhone(phone);
-        userDetails.setPassword(password);
-        userRepository.save(userDetails);
-        return SUCCESS;
-    }
-
-    /*
-     * CREATE Operation
      * This method will crate new cart item in the database table
      * and returns the SUCCESS message
-     * URI to access this: http://localhost:8080/pizzaApp/addCart?pizzaName=VegitablePizza&pizzaImageUrl=image&pizzaPrice=678&pizzaQuantity=4
+     * URI to access this: http://localhost:8080/demo/addCart?pizzaName=VegitablePizza&pizzaImageUrl=image&pizzaPrice=678&pizzaQuantity=4
      */
     @GetMapping(path="/addCart")
     public @ResponseBody String addNewCart(@RequestParam String pizzaName, @RequestParam String pizzaImageUrl, @RequestParam float pizzaPrice, @RequestParam int pizzaQuantity) {
@@ -130,7 +90,7 @@ public class MainController {
     * DELETE Operation
     * This method will delete existing pizza item by finding it using the ID
     * and returns the deleted item
-    * URI to access this: http://localhost:8080/pizzaApp/deleteByPizzaId?id=2
+    * URI to access this: http://localhost:8080/demo/deleteByPizzaId?id=2
     */
     @GetMapping(path="/deleteByPizzaId")
     public @ResponseBody List<PizzaDetails> deletePizzaById(@RequestParam Integer id) {
@@ -141,7 +101,7 @@ public class MainController {
      * DELETE Operation
      * This method will delete existing cart item by finding it using the ID
      * and returns the deleted item
-     * URI to access this: http://localhost:8080/pizzaApp/deleteByCartId?id=2
+     * URI to access this: http://localhost:8080/demo/deleteByCartId?id=2
      */
     @GetMapping(path="/deleteByCartId")
     public @ResponseBody List<CartDetails> deleteCartById(@RequestParam Integer id) {
@@ -151,7 +111,7 @@ public class MainController {
     /*
      * DELETE Operation
      * This method will delete all cart item
-     * URI to access this: http://localhost:8080/pizzaApp/deleteCartAll
+     * URI to access this: http://localhost:8080/demo/deleteCartAll
      */
     @GetMapping(path="/deleteCartAll")
     public @ResponseBody void deleteCartAll() {
@@ -162,7 +122,7 @@ public class MainController {
     * UPDATE Operation
     * This method will update existing pizza details by finding it using the ID
     * and returns the updated data
-    * URI to access this: http://localhost:8080/pizzaApp/updatePizza?id=1&name=updatedname&description=updated&price=1234.56&imageUrl=image
+    * URI to access this: http://localhost:8080/demo/updatePizza?id=1&name=updatedname&description=updated&price=1234.56&imageUrl=image
     */
     @GetMapping(path="/updatePizza")
     public @ResponseBody List<PizzaDetails> updatePizzaDetails(@RequestParam Integer id, @RequestParam String name, @RequestParam String description, @RequestParam Double price ,@RequestParam String imageUrl) {
@@ -181,28 +141,6 @@ public class MainController {
             }
         }
         return pizzaRepository.findByPizzaId(id);
-    }
-
-    /*
-     * UPDATE Operation
-     * This method will update existing user details by finding it using the ID
-     * and returns the updated data
-     * URI to access this: http://localhost:8080/pizzaApp/updateUser?email=updated&password=1234
-     */
-    @GetMapping(path="/updateUser")
-    public @ResponseBody List<UserDetails> updateUserDetails(@RequestParam String email, @RequestParam String password) {
-        //First get all the user details according to the provided ID
-        List<UserDetails> userDetailsList = userRepository.findByEmail(email);
-        if(!userDetailsList.isEmpty()) {
-            //Iterate through the user list
-            for(UserDetails userDetails: userDetailsList) {
-                //Set new values
-                userDetails.setPassword(password);
-                //Update existing user item
-                userRepository.save(userDetails);
-            }
-        }
-        return userRepository.findByEmail(email);
     }
 
 }
